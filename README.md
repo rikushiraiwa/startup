@@ -1,8 +1,9 @@
 # Your startup name here
+Daily Planner
 
 [My Notes](notes.md)
 
-A brief description of the application here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+I want to make a jurnal application that I can reffer yearly goal, monthly, goal, weekly goaln and daily goal. It will be also nice to be able to make a schedule for a day. I want to make it especially for mobile schreen.
 
 
 > [!NOTE]
@@ -18,19 +19,19 @@ A brief description of the application here. Lorem ipsum dolor sit amet, consect
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
-- [ ] A concise and compelling elevator pitch
-- [ ] Description of key features
-- [ ] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [/] Proper use of Markdown
+- [/] A concise and compelling elevator pitch
+- [/] Description of key features
+- [/] Description of how you will use each technology
+- [/] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Have you ever wished if you had a daily planner like what you used on your mission? Planner that allows you to reffer you goal and daily schedule? Here is what I made for you! Throught this daily planner, you can: Schedule you daily task, reffer your yealy, monthly, weekly, daily goal, and write your jurnal. It will be your life hack to achieve what you hope to achieve in your life!
 
 ### Design
 
-![Design image](placeholder.png)
+![Design image](./img/designImage.png)
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -43,20 +44,20 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Register goals
+- Input schdules and tasks
+- Write a jurnal
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Structure every letters and words with desirable font.
+- **CSS** - Design responsibly for mobile size screen.
+- **React** - Making componets and adds webiste a functions for example, type schedule, task, and goals. And also fetching request to the server side to process user inputs.
+- **Service** - process user input such as creating or updating schedules, tasks, and goals, and will provide the       necessary data to the React frontend through APIs. It also manages user authentication and interactions with the database.
+- **DB/Login** - DB is for keep the datas that users input such as schedule, task, and goals. Login is to be able to provide singple user and keep thier data by giving each user an ID so that DB can tell wichi person to interact. 
+- **WebSocket** -  will be used to enable real-time updates for schedules, tasks, and goals. For example, when a user updates their schedule, the changes will immediately reflect on all connected devices without needing to refresh the page.
 
 ## 🚀 AWS deliverable
 
