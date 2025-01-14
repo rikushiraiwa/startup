@@ -1,4 +1,3 @@
-# Your startup name here
 Daily Planner
 
 [My Notes](notes.md)
