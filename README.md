@@ -69,16 +69,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
-
+- [x] **HTML pages** - I created structual function of my app by using HTML
+- [x] **Proper HTML element usage** - I did use proper HTML element and it works.
+- [x] **Links** - I put the GitHub link in index.html page.
+- [x] **Text** - I put some text in every pages.
+- [ ] **3rd party API placeholder** - I did not want to have 3rd party API for now, but I may use somethings later
+- [ ] **Images** - I am not planning to use image for this app now.
+- [x] **Login placeholder** - I put Login Placeholder in login.html
+- [x] **DB data placeholder** - I put the DB palceholder in Journal and schedule page.
+- [x] **WebSocket placeholder** - I put WebSocket Placeholer in index.html page
 ## 🚀 CSS deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
