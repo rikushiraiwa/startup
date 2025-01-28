@@ -73,8 +73,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Proper HTML element usage** - I did use proper HTML element and it works.
 - [x] **Links** - I put the GitHub link in index.html page.
 - [x] **Text** - I put some text in every pages.
-- [ ] **3rd party API placeholder** - I did not want to have 3rd party API for now, but I may use somethings later
-- [ ] **Images** - I am not planning to use image for this app now.
+- [x] **3rd party API placeholder** - I use Google Calender AIP for journal page.
+- [x] **Images** - I use image for the index.html page for design purpose.
 - [x] **Login placeholder** - I put Login Placeholder in login.html
 - [x] **DB data placeholder** - I put the DB palceholder in Journal and schedule page.
 - [x] **WebSocket placeholder** - I put WebSocket Placeholer in index.html page
