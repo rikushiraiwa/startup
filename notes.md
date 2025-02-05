@@ -20,3 +20,9 @@ I used two type of input element, input and textare.
 There are also useful element such as Button and a tag. Button is leterally button, while a is able to contain link with words that I input inside a tag.
 
 
+## CSS Notes
+I used display: flex; to align elements properly. header, main, and footer were styled to create a clear structure.Margin, padding, and border were adjusted to make sure elements are not too close or overlapping.
+I changed the font size and color to make the page easy to read. Background colors were also applied to different sections.
+Styled button to make it stand out. input and textarea were adjusted for better usability.
+When the user hovers over a button, the background color changes to give feedback.
+Used max-width and percentage-based widths so the layout adapts to different screen sizes.

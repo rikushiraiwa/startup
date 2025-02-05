@@ -82,12 +82,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Header, footer, and main content body** - I did not complete this part of the deliverable.
-- [ ] **Navigation elements** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing** - I did not complete this part of the deliverable.
-- [ ] **Application elements** - I did not complete this part of the deliverable.
-- [ ] **Application text content** - I did not complete this part of the deliverable.
-- [ ] **Application images** - I did not complete this part of the deliverable.
+- [x] **Header, footer, and main content body** - Implemented and styled properly across all pages, ensuring consistency and structure.
+- [x] **Navigation elements** - Navigation bar is styled and aligned correctly for usability.
+- [x] **Responsive to window resizing** - Implemented flexible layouts and relative sizing to ensure proper responsiveness.
+- [x] **Application elements** - Forms, buttons, checkboxes, and text areas are properly styled and functional.
+- [x] **Application text content** - All text elements are clearly styled and readable.
+- [x] **Application images** - I add style for image but jsut did not provide it yet.
 
 ## 🚀 React part 1: Routing deliverable
 
