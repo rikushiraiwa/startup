@@ -2,14 +2,14 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #E8F5E9; /* 優しいグリーン */
+    background-color: #E8F5E9;
     color: #333;
     text-align: center;
 }
 
 /* ヘッダー */
 header {
-    background-color: #388E3C; /* 濃い緑 */
+    background-color: #388E3C;
     color: white;
     padding: 20px 0;
 }
@@ -40,4 +40,56 @@ nav ul li a {
 
 nav ul li a:hover {
     color: #C8E6C9; /* 淡い緑に変更 */
+}
+
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+main h2 {
+    color: #4CAF50;
+    font-size: 1.5em;
+}
+
+textarea {
+    width: 80%;
+    max-width: 600px;
+    height: 120px;
+    padding: 10px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    font-size: 1.1em;
+    resize: vertical;
+}
+
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #388E3C;
+    transform: scale(1.05);
+}
+
+footer {
+    background-color: #388E3C;
+    color: white;
+    padding: 10px 0;
+    margin-top: 20px;
 }
