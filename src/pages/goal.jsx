@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./styles/goal.css";
+import "../styles/goal.css";
 
 
 export default function Goal() {

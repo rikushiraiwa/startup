@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import placeholderImage from "../public/placeholder.png";
-import "./styles/home.css";
+import "../styles/home.css";
 
 
 export default function Home() {
