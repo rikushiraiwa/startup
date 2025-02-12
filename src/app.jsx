@@ -8,7 +8,6 @@ import Journal from "./pages/journal";
 import Goal from "./pages/goal";
 import Login from "./pages/login";
 
-// 404 Not Found ページ
 function NotFound() {
     return (
         <main className="container-fluid text-center py-5" style={{ backgroundColor: "#E8F5E9", color: "#388E3C" }}>
@@ -21,7 +20,6 @@ export default function App() {
     return (
         <BrowserRouter>
             <div className="body" style={{ backgroundColor: "#E8F5E9", minHeight: "100vh" }}>
-                {/* ナビゲーションバー */}
                 <header className="container-fluid bg-white shadow-sm">
                     <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: "#E8F5E9" }}>
                         <div className="container">
@@ -54,7 +52,6 @@ export default function App() {
                     </nav>
                 </header>
 
-                {/* ページ表示 */}
                 <main className="container flex-grow-1 mt-4">
                     <Routes>
                         <Route path="/" element={<Home />} />
@@ -66,7 +63,6 @@ export default function App() {
                     </Routes>
                 </main>
 
-                {/* フッター */}
                 <footer className="py-3 text-center shadow-sm mt-auto" style={{ backgroundColor: "#E8F5E9" }}>
                     <div className="container">
                         <span style={{ color: "#388E3C" }}>&copy; 2025 Life Hack Journal</span>

@@ -6,10 +6,8 @@ import { Container, Table, Form, Button } from "react-bootstrap";
 export default function Journal() {
     return (
         <div className="vh-100 d-flex flex-column">
-            {/* メインコンテンツ */}
             <Container className="flex-grow-1 w-100">
                 <div className="bg-light p-4 rounded shadow">
-                    {/* カレンダー */}
                     <h2 className="text-success text-center">Calendar</h2>
                     <Table bordered hover className="text-center">
                         <thead className="table-success">
@@ -33,10 +31,8 @@ export default function Journal() {
                         </tbody>
                     </Table>
 
-                    {/* Google カレンダー API */}
                     <h2 className="text-success text-center mt-4">Google Calendar API</h2>
 
-                    {/* 日記フォーム */}
                     <h2 className="text-success text-center mt-4">Write your Daily Journal</h2>
                     <Form>
                         <Form.Group className="mb-3">
