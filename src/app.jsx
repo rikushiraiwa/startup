@@ -32,7 +32,7 @@ export default function App() {
                             <div className="collapse navbar-collapse" id="navbarNav">
                                 <ul className="navbar-nav">
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" to="/" style={{ color: "#388E3C" }}>Home</NavLink>
+                                        <NavLink className="nav-link" to="/home" style={{ color: "#388E3C" }}>Home</NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink className="nav-link" to="/journal" style={{ color: "#388E3C" }}>Journal</NavLink>
@@ -54,7 +54,8 @@ export default function App() {
 
                 <main className="container flex-grow-1 mt-4">
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<Login />} /> {/* 初期表示をLoginページに変更 */}
+                        <Route path="/home" element={<Home />} /> {/* Homeを明示的なパスに */}
                         <Route path="/journal" element={<Journal />} />
                         <Route path="/schedule" element={<Schedule />} />
                         <Route path="/goal" element={<Goal />} />
