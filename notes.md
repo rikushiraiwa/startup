@@ -26,3 +26,10 @@ I changed the font size and color to make the page easy to read. Background colo
 Styled button to make it stand out. input and textarea were adjusted for better usability.
 When the user hovers over a button, the background color changes to give feedback.
 Used max-width and percentage-based widths so the layout adapts to different screen sizes.
+
+## React1
+-React uses componets so I do not need to add navbar for every page, as well as footer. BrowserRouter is changeing Routes componet. Only what is inside of Route tag is changed so other element of app.jsx will stay the same. 
+-I can use BootStrap for CSS. It is acually better for this project since I do not need to have css folder and file. 
+-In React, there is a way to creat a Form by using Form.Group and Form.control. There is Table also.
+
+

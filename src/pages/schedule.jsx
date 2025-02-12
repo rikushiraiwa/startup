@@ -3,14 +3,11 @@ import React from "react";
 export default function Schedule() {
     return (
         <div className="container-fluid bg-light-green min-vh-100 d-flex flex-column align-items-center py-5">
-            {/* ヘッダー */}
             <header className="text-center mb-4">
             </header>
 
-            {/* メインコンテンツ */}
             <main className="bg-white shadow-sm rounded p-4 text-center" style={{ maxWidth: "600px", width: "90%" }}>
                 <h2 className="text-success fw-bold">Plan Your Day</h2>
-                {/* タスク管理 */}
                 <ul className="list-group text-start">
                     <li className="list-group-item">
                         <input type="checkbox" className="me-2" /> Task1
@@ -27,7 +24,6 @@ export default function Schedule() {
                     <button className="btn btn-success text-white">Add Task</button>
                 </div>
 
-                {/* スケジュール管理 */}
                 <h2 className="text-success fw-bold">Schedule Your Day</h2>
                 <div className="mb-3">
                     <label className="form-label fw-bold">Event:</label>
@@ -39,7 +35,6 @@ export default function Schedule() {
                 </div>
                 <button className="btn btn-success text-white w-100">Add to Schedule</button>
 
-                {/* 今日のスケジュール */}
                 <h3 className="text-success fw-bold mt-4">Today's Schedule</h3>
                 <ul className="list-group text-start">
                     <li className="list-group-item">9:00am - Meeting</li>
