@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./app.css";
 
 import Home from "./pages/home";
 import Schedule from "./pages/schedule";
