@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./styles/goal.css";
 
 
-export default function Home() {
+export default function Goal() {
     return (
         <div>
             <header>

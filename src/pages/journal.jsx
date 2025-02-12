@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./styles/journal.css";
 
 
-export default function Home() {
+export default function Journal() {
     return (
         <div>
             <header>
