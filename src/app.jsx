@@ -19,32 +19,44 @@ function NotFound() {
 export default function App() {
     return (
         <BrowserRouter>
-            <div className="body" style={{ backgroundColor: "#E8F5E9", minHeight: "100vh" }}>
-                <header className="container-fluid bg-white shadow-sm">
-                    <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: "#E8F5E9" }}>
+            <div className="d-flex flex-column min-vh-100" style={{ backgroundColor: "#E8F5E9" }}>
+                
+                {/* ナビゲーションバーを固定＆デザイン改善 */}
+                <header className="container-fluid sticky-top shadow">
+                    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#388E3C", padding: "15px 0" }}>
                         <div className="container">
-                            <NavLink className="navbar-brand fw-bold" to="/" style={{ color: "#388E3C" }}>
+                            <NavLink className="navbar-brand fw-bold fs-4" to="/" style={{ color: "#FFFFFF" }}>
                                 Life Hack Journal
                             </NavLink>
                             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
-                            <div className="collapse navbar-collapse" id="navbarNav">
+                            <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                                 <ul className="navbar-nav">
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" to="/home" style={{ color: "#388E3C" }}>Home</NavLink>
+                                        <NavLink className="nav-link px-3 fs-5" to="/home" style={{ color: "#FFFFFF" }}>
+                                            Home
+                                        </NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" to="/journal" style={{ color: "#388E3C" }}>Journal</NavLink>
+                                        <NavLink className="nav-link px-3 fs-5" to="/journal" style={{ color: "#FFFFFF" }}>
+                                            Journal
+                                        </NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" to="/schedule" style={{ color: "#388E3C" }}>Schedule</NavLink>
+                                        <NavLink className="nav-link px-3 fs-5" to="/schedule" style={{ color: "#FFFFFF" }}>
+                                            Schedule
+                                        </NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" to="/goal" style={{ color: "#388E3C" }}>Goals</NavLink>
+                                        <NavLink className="nav-link px-3 fs-5" to="/goal" style={{ color: "#FFFFFF" }}>
+                                            Goals
+                                        </NavLink>
                                     </li>
                                     <li className="nav-item">
-                                        <NavLink className="nav-link" to="/login" style={{ color: "#388E3C" }}>Login</NavLink>
+                                        <NavLink className="nav-link px-3 fs-5" to="/login" style={{ color: "#FFFFFF" }}>
+                                            Login
+                                        </NavLink>
                                     </li>
                                 </ul>
                             </div>
@@ -54,8 +66,8 @@ export default function App() {
 
                 <main className="container flex-grow-1 mt-4">
                     <Routes>
-                        <Route path="/" element={<Login />} /> {/* 初期表示をLoginページに変更 */}
-                        <Route path="/home" element={<Home />} /> {/* Homeを明示的なパスに */}
+                        <Route path="/" element={<Login />} />
+                        <Route path="/home" element={<Home />} />
                         <Route path="/journal" element={<Journal />} />
                         <Route path="/schedule" element={<Schedule />} />
                         <Route path="/goal" element={<Goal />} />
