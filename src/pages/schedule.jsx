@@ -1,51 +1,54 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "../styles/schedule.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Schedule() {
     return (
-        <div>
-            <header>
-                <h1>Life Hack Journal</h1>
-                <nav>
-                    <ul>
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/journal">Journal</Link></li>
-                        <li><Link to="/schedule">Schedule</Link></li>
-                        <li><Link to="/goal">Goals</Link></li>
-                    </ul>
-                </nav>
-                <img src={placeholderImage} alt="Placeholder" />
+        <div className="container-fluid bg-light-green min-vh-100 d-flex flex-column align-items-center py-5">
+            {/* ヘッダー */}
+            <header className="text-center mb-4">
             </header>
 
-            <main>
-                <h2>Plan Your Day</h2>
-                <ul>
-                    <li><input type="checkbox" /> Task1</li>
-                    <li><input type="checkbox" /> Task2</li>
-                    <li><input type="checkbox" /> Task3</li>
+            {/* メインコンテンツ */}
+            <main className="bg-white shadow-sm rounded p-4 text-center" style={{ maxWidth: "600px", width: "90%" }}>
+                <h2 className="text-success fw-bold">Plan Your Day</h2>
+                {/* タスク管理 */}
+                <ul className="list-group text-start">
+                    <li className="list-group-item">
+                        <input type="checkbox" className="me-2" /> Task1
+                    </li>
+                    <li className="list-group-item">
+                        <input type="checkbox" className="me-2" /> Task2
+                    </li>
+                    <li className="list-group-item">
+                        <input type="checkbox" className="me-2" /> Task3
+                    </li>
                 </ul>
-                <input type="text" placeholder="New Task" />
-                <button>Add Task</button>
+                <div className="input-group my-3">
+                    <input type="text" className="form-control" placeholder="New Task" />
+                    <button className="btn btn-success text-white">Add Task</button>
+                </div>
 
-                <h2>Schedule Your Day</h2>
-                <label>Event:</label>
-                <input type="text" placeholder="Event Name" />
-                <label>Time:</label>
-                <input type="time" />
-                <button>Add to Schedule</button>
-                <h3>Today's Schedule</h3>
-                <ul>
-                    <li>9:00am - Meeting</li>
-                    <li>11:00am - Meeting</li>
+                {/* スケジュール管理 */}
+                <h2 className="text-success fw-bold">Schedule Your Day</h2>
+                <div className="mb-3">
+                    <label className="form-label fw-bold">Event:</label>
+                    <input type="text" className="form-control" placeholder="Event Name" />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label fw-bold">Time:</label>
+                    <input type="time" className="form-control" />
+                </div>
+                <button className="btn btn-success text-white w-100">Add to Schedule</button>
+
+                {/* 今日のスケジュール */}
+                <h3 className="text-success fw-bold mt-4">Today's Schedule</h3>
+                <ul className="list-group text-start">
+                    <li className="list-group-item">9:00am - Meeting</li>
+                    <li className="list-group-item">11:00am - Meeting</li>
                 </ul>
 
-                <h2>Database</h2>
+                <h2 className="text-green fw-bold mt-4">Database</h2>
             </main>
-
-            <footer>
-                <p>&copy; 2025 Life Hack Journal</p>
-            </footer>
         </div>
     );
 }

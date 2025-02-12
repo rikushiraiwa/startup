@@ -1,101 +1,51 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "../styles/journal.css";
+import { Container, Navbar, Nav, Table, Form, Button } from "react-bootstrap";
+
 
 
 export default function Journal() {
     return (
-        <div>
-            <header>
-                <h1>Life Hack Journal</h1>
-                <nav>
-                    <ul>
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/journal">Journal</Link></li>
-                        <li><Link to="/schedule">Schedule</Link></li>
-                        <li><Link to="/goal">Goals</Link></li>
-                    </ul>
-                </nav>
-                <img src={placeholderImage} alt="Placeholder" />
-            </header>
+        <div className="vh-100 d-flex flex-column">
+            {/* メインコンテンツ */}
+            <Container className="flex-grow-1 w-100">
+                <div className="bg-light p-4 rounded shadow">
+                    {/* カレンダー */}
+                    <h2 className="text-success text-center">Calendar</h2>
+                    <Table bordered hover className="text-center">
+                        <thead className="table-success">
+                            <tr>
+                                <th>Sun</th>
+                                <th>Mon</th>
+                                <th>Tue</th>
+                                <th>Wed</th>
+                                <th>Thu</th>
+                                <th>Fri</th>
+                                <th>Sat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td>
+                            </tr>
+                            <tr>
+                                <td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td>
+                            </tr>
+                        </tbody>
+                    </Table>
 
-            <main>
-                <h2>Calendar</h2>
-                <table border="1" style="width: 100%; text-align: center;">
-                    <thead>
-                        <tr>
-                            <th>Sun</th>
-                            <th>Mon</th>
-                            <th>Tue</th>
-                            <th>Wed</th>
-                            <th>Thu</th>
-                            <th>Fri</th>
-                            <th>Sat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>6</td>
-                            <td>7</td>
-                            <td>8</td>
-                            <td>9</td>
-                            <td>10</td>
-                            <td>11</td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>13</td>
-                            <td>14</td>
-                            <td>15</td>
-                            <td>16</td>
-                            <td>17</td>
-                            <td>18</td>
-                        </tr>
-                        <tr>
-                            <td>19</td>
-                            <td>20</td>
-                            <td>21</td>
-                            <td>22</td>
-                            <td>23</td>
-                            <td>24</td>
-                            <td>25</td>
-                        </tr>
-                        <tr>
-                            <td>26</td>
-                            <td>27</td>
-                            <td>28</td>
-                            <td>29</td>
-                            <td>30</td>
-                            <td>31</td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+                    {/* Google カレンダー API */}
+                    <h2 className="text-success text-center mt-4">Google Calendar API</h2>
 
-                <h2>Google Calender API</h2>
-                {/* tables are replace by this API */}
-
-                <h2>Write your Daily Journal</h2>
-                <textarea placeholder="Write your day here..." rows="10" cols="50"></textarea>
-                <button>Save Entry</button>
-
-                <h2>DataBase</h2>
-
-            </main>
-
-            <footer>
-                <p>&copy; 2025 Life Hack Journal</p>
-            </footer>
+                    {/* 日記フォーム */}
+                    <h2 className="text-success text-center mt-4">Write your Daily Journal</h2>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Control as="textarea" rows={5} placeholder="Write your day here..." />
+                        </Form.Group>
+                        <Button variant="success" className="w-100">Save Entry</Button>
+                    </Form>
+                </div>
+            </Container>
         </div>
     );
 }

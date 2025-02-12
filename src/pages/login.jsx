@@ -1,25 +1,33 @@
 import React from "react";
-import "../styles/login.css";
+import { Container, Form, Button } from "react-bootstrap";
 
 export default function Login() {
     return (
-        <div>
-            <header>
-                <h1>Life Hack Journal</h1>
+        <div className="container-fluid min-vh-100 d-flex flex-column align-items-center py-5" style={{ backgroundColor: "#E8F5E9" }}>
+            
+            {/* ヘッダー */}
+            <header className="text-center mb-4">
+                <h1 className="text-success fw-bold">Life Hack Journal</h1>
             </header>
 
-            <main>
-                <h2>Login</h2>
-                <input type="text" placeholder="User Name" />
-                <input type="password" placeholder="Password" />
-                <button>Login</button>
+            {/* ログインフォームの白いコンテナ */}
+            <Container className="bg-white shadow-sm rounded p-4 text-center" style={{ maxWidth: "400px", width: "90%" }}>
+                <h2 className="text-success fw-bold">Login</h2>
 
-                <h2>Placeholder for login page</h2>
-            </main>
+                {/* フォーム */}
+                <Form>
+                    <Form.Group className="mb-3">
+                        <Form.Control type="text" placeholder="User Name" />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Control type="password" placeholder="Password" />
+                    </Form.Group>
+                    <Button variant="success" className="w-100">Login</Button>
+                </Form>
 
-            <footer>
-                <p>&copy; 2025 Life Hack Journal</p>
-            </footer>
+                {/* プレースホルダー */}
+                <h2 className="text-success fw-bold mt-4">Placeholder for login page</h2>
+            </Container>
         </div>
     );
 }

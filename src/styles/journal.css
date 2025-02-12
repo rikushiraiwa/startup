@@ -1,38 +1,40 @@
+全体のスタイル
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    background-color: #E8F5E9;
+    background-color: white !important; /* 背景を白に */
     color: #333;
-    text-align: center;
+    font-family: Arial, sans-serif;
 }
 
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    width: 100%;
+/* ジャーナルページ全体 */
+.journal-page {
+    width: 100% !important;
+    max-width: none !important;
+    background-color: white !important; /* 確実に白 */
+    margin: 0;
+    padding: 0;
 }
 
+/* ヘッダー */
 header {
     background-color: #388E3C;
     color: white;
-    padding: 20px 0;
+    padding: 20px;
     width: 100%;
+    text-align: center;
 }
 
 header h1 {
     margin: 0;
-    font-size: 2em;
+    font-size: 2.5em;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
     margin: 10px 0;
-    text-align: center;
 }
 
 nav ul li {
@@ -44,23 +46,25 @@ nav ul li a {
     text-decoration: none;
     color: white;
     font-weight: bold;
+    font-size: 1.2em;
 }
 
 nav ul li a:hover {
     color: #C8E6C9;
 }
 
+/* メインコンテンツ */
 main {
-    flex: 1;
-    max-width: 800px;
-    width: 90%;
-    background-color: white;
+    width: 100%; /* 幅を画面全体に */
+    max-width: none; /* 制限を解除 */
     padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-    margin: 20px auto;
+    background-color: white;
+    border-radius: 0; /* 角を丸めない */
+    box-shadow: none; /* 影をなくす */
+    margin: 0; /* 余白をなくす */
 }
 
+/* カレンダーのスタイル */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -89,9 +93,20 @@ td:hover {
     cursor: pointer;
 }
 
+/* 画像のスタイル */
+header img {
+    display: block;
+    margin: 20px auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #F1F8E9;
+}
+
+/* テキストエリアのスタイル */
 textarea {
     width: 100%;
-    height: 200px;
+    height: 150px;
     padding: 12px;
     border: 2px solid #4CAF50;
     border-radius: 8px;
@@ -104,9 +119,10 @@ textarea:focus {
     border-color: #388E3C;
 }
 
+/* ボタンのスタイル */
 button {
     display: block;
-    margin-top: 15px;
+    margin: 15px auto;
     padding: 12px 25px;
     font-size: 1.2em;
     font-weight: bold;
@@ -131,4 +147,24 @@ footer {
     text-align: center;
     width: 100%;
     margin-top: auto;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    main {
+        width: 100%;
+        padding: 20px;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    textarea {
+        height: 120px;
+    }
 }

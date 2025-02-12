@@ -1,36 +1,34 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "../styles/goal.css";
-
 
 export default function Goal() {
     return (
-        <div>
-            <header>
-                <h1>Life Hack Journal</h1>
-                <nav>
-                    <ul>
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/journal">Journal</Link></li>
-                        <li><Link to="/schedule">Schedule</Link></li>
-                        <li><Link to="/goal">Goals</Link></li>
-                    </ul>
-                </nav>
-            </header>
+        <div className="container py-5">
 
-            <main>
-                <h2>Managing Your Goals</h2>
-                <textarea placeholder="Write your goals here..." rows="5" cols="50"></textarea>
-                <button>Save Goals</button>
+            {/* メインコンテンツ */}
+            <main className="bg-white p-4 rounded shadow-sm">
+                <h2 className="text-center text-success">Managing Your Goals</h2>
+                <p className="text-center text-muted">Set, track, and achieve your goals effectively.</p>
 
+                {/* 目標入力フォーム */}
+                <div className="mb-3">
+                    <textarea 
+                        className="form-control"
+                        placeholder="Write your goals here..." 
+                        rows="5"
+                    ></textarea>
+                </div>
 
-                <h2>DataBase</h2>
+                {/* 目標保存ボタン */}
+                <div className="text-center">
+                    <button className="btn btn-success px-4">Save Goals</button>
+                </div>
 
+                <hr />
+
+                {/* データベース情報 (仮のデータ表示部分) */}
+                <h2 className="text-center text-success">Database</h2>
+                <p className="text-center text-muted">Stored goals will be displayed here.</p>
             </main>
-
-            <footer>
-                <p>&copy; 2025 Life Hack Journal</p>
-            </footer>
         </div>
     );
 }

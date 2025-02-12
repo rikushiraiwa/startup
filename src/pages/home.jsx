@@ -1,37 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/home.css";
+import { Container } from "react-bootstrap";
 
+const placeholderImage = "/placeholder.png";
 
 export default function Home() {
     return (
-        <div>
-            <header>
-                <h1>Life Hack Journal</h1>
-                <nav>
-                    <ul>
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/journal">Journal</Link></li>
-                        <li><Link to="/schedule">Schedule</Link></li>
-                        <li><Link to="/goal">Goals</Link></li>
-                    </ul>
-                </nav>
-                <img src={placeholderImage} alt="Placeholder" />
+        <div className="container-fluid vh-100 d-flex flex-column align-items-center py-4" style={{ backgroundColor: "#E8F5E9" }}>
+            {/* ヘッダー */}
+            <header className="text-center mb-4">
+                <h1 className="text-success fw-bold">Life Hack Journal</h1>
             </header>
 
-            <main>
-                <h2>Welcome to Life Hack Journal</h2>
-                <p>This is the journal to achieve your life goal</p>
-                <p>Setting Goals, make ToDos, set schedules, reflect by writing journal</p>
+            {/* メインコンテンツの白い枠コンテナ */}
+            <Container className="bg-white shadow-sm rounded p-4 text-center" style={{ maxWidth: "700px", width: "90%" }}>
+                <h2 className="text-success fw-bold">Welcome to Life Hack Journal</h2>
+                <div className="text-center my-3">
+                    <img src={placeholderImage} alt="Placeholder" className="rounded-circle" width="120" />
+                </div>
+                <p className="text-muted">This is the journal to achieve your life goal</p>
+                <p className="text-muted">Setting Goals, make ToDos, set schedules, reflect by writing journal</p>
 
-                <h2>Websocket Data here</h2>
-            </main>
-
-            <a href="https://github.com/rikushiraiwa/startup.git">GitHub</a>
-
-            <footer>
-                <p>&copy; 2025 Life Hack Journal</p>
-            </footer>
+                <h2 className="text-success fw-bold mt-4">Websocket Data here</h2>
+            </Container>
         </div>
     );
 }
