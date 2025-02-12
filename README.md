@@ -93,9 +93,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - Routing between login and voting components.
+- [x] **Bundled using Vite** - I use Vite to build my startup app.
+- [x] **Components** - I made a componet that has HTML and style, first I used CSS but decided to get rid of it since I prefer BootStrap more. 
+- [x] **Router** - My Routing works well.
 
 ## 🚀 React part 2: Reactivity
 
