@@ -9,6 +9,15 @@ export default function Goal() {
         setSavedGoals(storedGoals);
     }, [])
 
+    const handleSaveGoal = () => {
+        if (!goal.trim()) return;
+
+        const updateGoals = [...savedGoals, goal];
+        setSaveGoals(updateGoals);
+        localStorage.setItem("goals", JSON.stringify(updateGoals));
+        setGoal("");
+    };
+
     
     return (
         <div className="container py-5">
