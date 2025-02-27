@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Container, Table, Form, Button } from "react-bootstrap";
 
-
-
 export default function Journal() {
     const [entry, setEntry] = useState("");
     const [savedEntries, setSavedEntries] = useState([]);
 
     useEffect(() => {
-        const storedEntries = JSON.parse(localStorage.getItem("journalEntries")) || []
+        const storedEntries = JSON.parse(localStorage.getItem("journalEntries")) || [];
         setSavedEntries(storedEntries);
     }, []);
 
-    const handleSavedEntry = () => {
-        if(!entry.trim()) return;
+    const handleSaveEntry = () => {
+        if (!entry.trim()) return;
 
         const updatedEntries = [...savedEntries, entry];
         setSavedEntries(updatedEntries);
         localStorage.setItem("journalEntries", JSON.stringify(updatedEntries));
         setEntry("");
     };
-
 
     return (
         <div className="vh-100 d-flex flex-column">
@@ -54,10 +51,29 @@ export default function Journal() {
                     <h2 className="text-success text-center mt-4">Write your Daily Journal</h2>
                     <Form>
                         <Form.Group className="mb-3">
-                            <Form.Control as="textarea" rows={5} placeholder="Write your day here..." />
+                            <Form.Control
+                                as="textarea"
+                                rows={5}
+                                placeholder="Write your day here..."
+                                value={entry}
+                                onChange={(e) => setEntry(e.target.value)}
+                            />
                         </Form.Group>
-                        <Button variant="success" className="w-100">Save Entry</Button>
+                        <Button variant="success" className="w-100" onClick={handleSaveEntry}>
+                            Save Entry
+                        </Button>
                     </Form>
+
+                    <h2 className="text-success text-center mt-4">Saved Journal Entries</h2>
+                    <ul className="list-group">
+                        {savedEntries.length > 0 ? (
+                            savedEntries.map((e, index) => (
+                                <li key={index} className="list-group-item">{e}</li>
+                            ))
+                        ) : (
+                            <li className="list-group-item text-muted">No journal entries yet.</li>
+                        )}
+                    </ul>
                 </div>
             </Container>
         </div>
