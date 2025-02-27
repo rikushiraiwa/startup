@@ -101,8 +101,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - I have implemented most of the functionality required for this project. I used setInterval to mock WebSocket messages in the Home component. LocalStorage was used to persist data for goals, journal entries, tasks, and schedules. State updates and UI interactions were implemented using useState.
+- [x] **Hooks** - I used useState to manage user input and dynamic updates in multiple components. I used useEffect to handle data persistence with LocalStorage and simulate WebSocket behavior. Cleanup functions were included in useEffect to prevent memory leaks when components unmount.
 
 ## 🚀 Service deliverable
 
