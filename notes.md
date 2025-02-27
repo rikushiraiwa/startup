@@ -32,4 +32,8 @@ Used max-width and percentage-based widths so the layout adapts to different scr
 -I can use BootStrap for CSS. It is acually better for this project since I do not need to have css folder and file. 
 -In React, there is a way to creat a Form by using Form.Group and Form.control. There is Table also.
 
-
+## React2
+-useState: useState allows managing state within a React component. It helps store and update values dynamically without reloading the page. This is useful for handling user input, toggling elements, and managing lists.
+-useEffect: useEffect is used for handling side effects in a React component. It runs after the component renders and can be used for fetching data, updating local storage, or listening to events. It also allows cleanup actions, preventing memory leaks when components unmount.
+-Practical Application: useState is useful for tracking form inputs, managing task lists, or updating UI elements dynamically.
+-useEffect is helpful for persisting data with localStorage, handling API calls, or synchronizing UI with external changes.
