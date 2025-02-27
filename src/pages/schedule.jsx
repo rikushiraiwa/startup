@@ -1,6 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
 
 export default function Schedule() {
+    const [tasks, setTasks] = useState([]);
+    const [newTask, setNewTask] = useState("");
+    const [schedule, setSchedule] = useState([]);
+    const [eventName, setEventName] = useState("");
+    const [eventTime, setEventTime] = useState("");
+
+    useEffect(() => {
+        const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        const storedSchedule = JSON.parse(localStorage.getItem("schedule")) || [];
+        setTasks(storedTasks);
+        setSchedule(storedSchedule);
+    }, []);
+
+    const handleAddTask = () => {
+        if (!newTask.trim()) return;
+
+        const updatedTasks = [...tasks, { text: newTask, completed: false }];
+        setTasks(updatedTasks);
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+        setNewTask("");
+    };
+
+    const toggleTaskCompletion = (index) => {
+        const updatedTasks = [...tasks];
+        updatedTasks[index].completed = !updatedTasks[index].completed;
+        setTasks(updatedTasks);
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    };
+
+    const handleDeleteTask = (index) => {
+        const updatedTasks = tasks.filter((_, i) => i !== index);
+        setTasks(updatedTasks);
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    };
+
+    const handleAddSchedule = () => {
+        if (!eventName.trim() || !eventTime.trim()) return;
+
+        const updatedSchedule = [...schedule, { name: eventName, time: eventTime }];
+        setSchedule(updatedSchedule);
+        localStorage.setItem("schedule", JSON.stringify(updatedSchedule));
+        setEventName("");
+        setEventTime("");
+    };
+
+    const handleDeleteSchedule = (index) => {
+        const updatedSchedule = schedule.filter((_, i) => i !== index);
+        setSchedule(updatedSchedule);
+        localStorage.setItem("schedule", JSON.stringify(updatedSchedule));
+    };
+
     return (
         <div className="container-fluid bg-light-green min-vh-100 d-flex flex-column align-items-center py-5">
             <header className="text-center mb-4">
