@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Table, Form, Button } from "react-bootstrap";
 
 
 
 export default function Journal() {
+    const [entry, setEntry] = useState("");
+    const [savedEntries, setSavedEntries] = useState([]);
+
+    useEffect(() => {
+        const storedEntries = JSON.parse(localStorage.getItem("journalEntries")) || []
+        setSavedEntries(storedEntries);
+    }, []);
+
+    const handleSavedEntry = () => {
+        if(!entry.trim()) return;
+
+        const updatedEntries = [...savedEntries, entry];
+        setSavedEntries(updatedEntries);
+        localStorage.setItem("journalEntries", JSON.stringify(updatedEntries));
+        setEntry("");
+    };
+
+
     return (
         <div className="vh-100 d-flex flex-column">
             <Container className="flex-grow-1 w-100">
