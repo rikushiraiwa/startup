@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-
 export default function Schedule() {
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState("");
@@ -56,44 +55,89 @@ export default function Schedule() {
     return (
         <div className="container-fluid bg-light-green min-vh-100 d-flex flex-column align-items-center py-5">
             <header className="text-center mb-4">
+                <h1 className="text-success fw-bold">Daily Schedule</h1>
             </header>
 
             <main className="bg-white shadow-sm rounded p-4 text-center" style={{ maxWidth: "600px", width: "90%" }}>
                 <h2 className="text-success fw-bold">Plan Your Day</h2>
                 <ul className="list-group text-start">
-                    <li className="list-group-item">
-                        <input type="checkbox" className="me-2" /> Task1
-                    </li>
-                    <li className="list-group-item">
-                        <input type="checkbox" className="me-2" /> Task2
-                    </li>
-                    <li className="list-group-item">
-                        <input type="checkbox" className="me-2" /> Task3
-                    </li>
+                    {tasks.length > 0 ? (
+                        tasks.map((task, index) => (
+                            <li key={index} className="list-group-item d-flex align-items-center">
+                                <input
+                                    type="checkbox"
+                                    className="me-2"
+                                    checked={task.completed}
+                                    onChange={() => toggleTaskCompletion(index)}
+                                />
+                                <span className={task.completed ? "text-decoration-line-through" : ""}>{task.text}</span>
+                                <button
+                                    className="btn btn-danger btn-sm ms-auto"
+                                    onClick={() => handleDeleteTask(index)}
+                                >
+                                    ❌
+                                </button>
+                            </li>
+                        ))
+                    ) : (
+                        <li className="list-group-item text-muted">No tasks yet.</li>
+                    )}
                 </ul>
                 <div className="input-group my-3">
-                    <input type="text" className="form-control" placeholder="New Task" />
-                    <button className="btn btn-success text-white">Add Task</button>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="New Task"
+                        value={newTask}
+                        onChange={(e) => setNewTask(e.target.value)}
+                    />
+                    <button className="btn btn-success text-white" onClick={handleAddTask}>
+                        Add Task
+                    </button>
                 </div>
 
                 <h2 className="text-success fw-bold">Schedule Your Day</h2>
                 <div className="mb-3">
                     <label className="form-label fw-bold">Event:</label>
-                    <input type="text" className="form-control" placeholder="Event Name" />
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Event Name"
+                        value={eventName}
+                        onChange={(e) => setEventName(e.target.value)}
+                    />
                 </div>
                 <div className="mb-3">
                     <label className="form-label fw-bold">Time:</label>
-                    <input type="time" className="form-control" />
+                    <input
+                        type="time"
+                        className="form-control"
+                        value={eventTime}
+                        onChange={(e) => setEventTime(e.target.value)}
+                    />
                 </div>
-                <button className="btn btn-success text-white w-100">Add to Schedule</button>
+                <button className="btn btn-success text-white w-100" onClick={handleAddSchedule}>
+                    Add to Schedule
+                </button>
 
                 <h3 className="text-success fw-bold mt-4">Today's Schedule</h3>
                 <ul className="list-group text-start">
-                    <li className="list-group-item">9:00am - Meeting</li>
-                    <li className="list-group-item">11:00am - Meeting</li>
+                    {schedule.length > 0 ? (
+                        schedule.map((event, index) => (
+                            <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+                                {event.time} - {event.name}
+                                <button
+                                    className="btn btn-danger btn-sm"
+                                    onClick={() => handleDeleteSchedule(index)}
+                                >
+                                    ❌
+                                </button>
+                            </li>
+                        ))
+                    ) : (
+                        <li className="list-group-item text-muted">No events scheduled.</li>
+                    )}
                 </ul>
-
-                <h2 className="text-green fw-bold mt-4">Database</h2>
             </main>
         </div>
     );
