@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Goal() {
+    const [goal, setGoal] = useState("");
+    const [saveGoals, setSaveGoals] = useState([]);
+
+    useEffect(() =>{
+        const storedGoals = JSON.parse(localStorage.getItem("goals")) || [];
+        setSavedGoals(storedGoals);
+    }, [])
+
+    
     return (
         <div className="container py-5">
 
