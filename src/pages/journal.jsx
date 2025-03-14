@@ -5,18 +5,31 @@ export default function Journal() {
     const [entry, setEntry] = useState("");
     const [savedEntries, setSavedEntries] = useState([]);
 
+    // 📌 1. バックエンドからJournalエントリーを取得
     useEffect(() => {
-        const storedEntries = JSON.parse(localStorage.getItem("journalEntries")) || [];
-        setSavedEntries(storedEntries);
+        fetch("/api/journal")
+            .then((res) => res.json())
+            .then((data) => setSavedEntries(data))
+            .catch((err) => console.error("Failed to fetch journal entries:", err));
     }, []);
 
+    // 📌 2. Journalエントリーを保存
     const handleSaveEntry = () => {
         if (!entry.trim()) return;
 
-        const updatedEntries = [...savedEntries, entry];
-        setSavedEntries(updatedEntries);
-        localStorage.setItem("journalEntries", JSON.stringify(updatedEntries));
-        setEntry("");
+        fetch("/api/journal", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ entry }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setSavedEntries(data.entries);
+                setEntry("");
+            })
+            .catch((err) => console.error("Failed to save entry:", err));
     };
 
     return (
