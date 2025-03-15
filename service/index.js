@@ -10,11 +10,10 @@ app.use(express.static("public"));
 
 let journalEntries = [];
 let goals = [];
+let tasks = [];
 let schedule = [];
 
-
-
-//Journal APIs
+// 📌 Journal APIs
 app.get("/api/journal", (req, res) => {
     res.json(journalEntries);
 });
@@ -28,8 +27,7 @@ app.post("/api/journal", (req, res) => {
     res.json({ message: "Journal entry saved!", entries: journalEntries });
 });
 
-
-//Goals APIs
+// 📌 Goals APIs
 app.get("/api/goals", (req, res) => {
     res.json(goals);
 });
@@ -43,69 +41,61 @@ app.post("/api/goals", (req, res) => {
     res.json({ message: "Goal saved!", goals });
 });
 
-//Schedule APIs
-app.get("/api/tasks", (req, res) => {
-    res.json(tasks);
-});
+// 📌 Tasks APIs
+app.get("/api/tasks", (req, res) => res.json(tasks));
 
-//Add task
 app.post("/api/tasks", (req, res) => {
     const { text } = req.body;
     if (!text || text.trim() === "") {
         return res.status(400).json({ error: "Task cannot be empty" });
     }
     tasks.push({ text, completed: false });
-    res.json({ message: "Task added!", tasks });
+    res.json(tasks);
 });
 
-//Delete task
 app.delete("/api/tasks/:index", (req, res) => {
     const index = parseInt(req.params.index);
     if (index >= 0 && index < tasks.length) {
         tasks.splice(index, 1);
-        res.json({ message: "Task deleted!", tasks });
+        res.json(tasks);
     } else {
         res.status(400).json({ error: "Invalid index" });
     }
 });
 
-//Chnage task's status
 app.patch("/api/tasks/:index", (req, res) => {
     const index = parseInt(req.params.index);
     if (index >= 0 && index < tasks.length) {
         tasks[index].completed = !tasks[index].completed;
-        res.json({ message: "Task updated!", tasks });
+        res.json(tasks);
     } else {
         res.status(400).json({ error: "Invalid index" });
     }
 });
 
-//Get schedule
-app.get("/api/schedule", (req, res) => {
-    res.json(schedule);
-});
+// 📌 Schedule APIs
+app.get("/api/schedule", (req, res) => res.json(schedule));
 
-//Add shcedule
 app.post("/api/schedule", (req, res) => {
     const { name, time } = req.body;
-    if (!name || !time) {
+    if (!name.trim() || !time.trim()) {
         return res.status(400).json({ error: "Event name and time are required" });
     }
     schedule.push({ name, time });
-    res.json({ message: "Schedule added!", schedule });
+    res.json(schedule);
 });
 
-//Delete schedule
 app.delete("/api/schedule/:index", (req, res) => {
     const index = parseInt(req.params.index);
     if (index >= 0 && index < schedule.length) {
         schedule.splice(index, 1);
-        res.json({ message: "Schedule deleted!", schedule });
+        res.json(schedule);
     } else {
         res.status(400).json({ error: "Invalid index" });
     }
 });
 
+// 📌 サーバー起動
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
