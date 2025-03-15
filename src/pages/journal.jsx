@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Container, Table, Form, Button } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 export default function Journal() {
     const [entry, setEntry] = useState("");
     const [savedEntries, setSavedEntries] = useState([]);
+    const [date, setDate] = useState(new Date());
 
-    // 📌 1. バックエンドからJournalエントリーを取得
+    // 📌 1. バックエンドから Journal エントリーを取得
     useEffect(() => {
         fetch("/api/journal")
             .then((res) => res.json())
@@ -13,16 +16,14 @@ export default function Journal() {
             .catch((err) => console.error("Failed to fetch journal entries:", err));
     }, []);
 
-    // 📌 2. Journalエントリーを保存
+    // 📌 2. Journal エントリーを保存
     const handleSaveEntry = () => {
         if (!entry.trim()) return;
 
         fetch("/api/journal", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ entry }),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ entry: `${date.toLocaleDateString()} ${entry}` }),
         })
             .then((res) => res.json())
             .then((data) => {
@@ -33,33 +34,12 @@ export default function Journal() {
     };
 
     return (
-        <div className="vh-100 d-flex flex-column">
+        <div className="d-flex flex-column min-vh-100">
             <Container className="flex-grow-1 w-100">
                 <div className="bg-light p-4 rounded shadow">
                     <h2 className="text-success text-center">Calendar</h2>
-                    <Table bordered hover className="text-center">
-                        <thead className="table-success">
-                            <tr>
-                                <th>Sun</th>
-                                <th>Mon</th>
-                                <th>Tue</th>
-                                <th>Wed</th>
-                                <th>Thu</th>
-                                <th>Fri</th>
-                                <th>Sat</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td>
-                            </tr>
-                            <tr>
-                                <td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td>
-                            </tr>
-                        </tbody>
-                    </Table>
-
-                    <h2 className="text-success text-center mt-4">Google Calendar API</h2>
+                    <Calendar onChange={setDate} value={date} />
+                    <p className="text-center">Selected Date: {date.toDateString()}</p>
 
                     <h2 className="text-success text-center mt-4">Write your Daily Journal</h2>
                     <Form>
@@ -78,17 +58,31 @@ export default function Journal() {
                     </Form>
 
                     <h2 className="text-success text-center mt-4">Saved Journal Entries</h2>
-                    <ul className="list-group">
-                        {savedEntries.length > 0 ? (
-                            savedEntries.map((e, index) => (
-                                <li key={index} className="list-group-item">{e}</li>
-                            ))
-                        ) : (
-                            <li className="list-group-item text-muted">No journal entries yet.</li>
-                        )}
-                    </ul>
+                    
+                    {/* 📌 スクロール可能なエリアを追加 */}
+                    <div className="overflow-auto" style={{ maxHeight: "300px", border: "1px solid #ddd", padding: "10px" }}>
+                        <ul className="list-group">
+                            {savedEntries.length > 0 ? (
+                                savedEntries.map((e, index) => (
+                                    <li key={index} className="list-group-item">{e}</li>
+                                ))
+                            ) : (
+                                <li className="list-group-item text-muted">No journal entries yet.</li>
+                            )}
+                        </ul>
+                    </div>
                 </div>
             </Container>
+
+            {/* 📌 フッターを固定 */}
+            <footer className="py-3 text-center shadow-sm mt-auto" style={{ backgroundColor: "#E8F5E9", position: "fixed", bottom: "0", width: "100%" }}>
+                <div className="container">
+                    <span style={{ color: "#388E3C" }}>&copy; 2025 Life Hack Journal</span>
+                    <a className="ms-3 fw-bold" href="https://github.com/rikushiraiwa/startup" style={{ color: "#388E3C" }}>
+                        GitHub Repository
+                    </a>
+                </div>
+            </footer>
         </div>
     );
 }
