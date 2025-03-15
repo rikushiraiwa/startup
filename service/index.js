@@ -25,15 +25,27 @@ let schedule = [];
 let users = {}; // ユーザー情報を保存
 
 // 📌 Journal APIs
-app.get("/api/journal", (req, res) => res.json(journalEntries));
+app.get("/api/journal", (req, res) => {
+    try {
+        res.json(journalEntries.length ? journalEntries : []);
+    } catch (error) {
+        console.error("Error fetching journal entries:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 app.post("/api/journal", (req, res) => {
-    const { entry } = req.body;
-    if (!entry || entry.trim() === "") {
-        return res.status(400).json({ error: "Entry cannot be empty" });
+    try {
+        const { entry } = req.body;
+        if (!entry || entry.trim() === "") {
+            return res.status(400).json({ error: "Entry cannot be empty" });
+        }
+        journalEntries.push(entry);
+        res.json({ message: "Journal entry saved!", entries: journalEntries });
+    } catch (error) {
+        console.error("Error saving journal entry:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-    journalEntries.push(entry);
-    res.json({ message: "Journal entry saved!", entries: journalEntries });
 });
 
 // 📌 Goals APIs
