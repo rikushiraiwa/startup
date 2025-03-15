@@ -108,12 +108,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-
+- [x] **Node.js/Express HTTP service** - I set up an Express.js server to handle API requests for journal entries, goals, tasks, and schedules.
+- [x] **Static middleware for frontend** - I configured Express to serve static files, allowing the frontend to interact with the backend.
+- [x] **Calls to third party endpoints** - I did not use Google Calendar AIP because I did not want to pay or anything now. So Insted I used react calendar library. I hope it counts.
+- [x] **Backend service endpoints** -  I implemented RESTful API endpoints for handling journal entries, task management, and scheduling features.
+- [x] **Frontend calls service endpoints** - I connected the frontend to backend service endpoints, allowing users to save and retrieve journal entries, goals, and tasks dynamically.
 ## 🚀 DB/Login deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.

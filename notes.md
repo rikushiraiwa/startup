@@ -37,3 +37,11 @@ Used max-width and percentage-based widths so the layout adapts to different scr
 -useEffect: useEffect is used for handling side effects in a React component. It runs after the component renders and can be used for fetching data, updating local storage, or listening to events. It also allows cleanup actions, preventing memory leaks when components unmount.
 -Practical Application: useState is useful for tracking form inputs, managing task lists, or updating UI elements dynamically.
 -useEffect is helpful for persisting data with localStorage, handling API calls, or synchronizing UI with external changes.
+
+# Service
+-Express.js: Express.js is a minimal and flexible Node.js framework for building web applications and APIs. It simplifies handling HTTP requests, routing, and middleware integration. It is widely used for creating backend services that communicate with databases and frontend applications.
+-REST API Endpoints: RESTful APIs allow communication between the frontend and backend using HTTP methods such as GET, POST, PATCH, and DELETE. Each endpoint serves a specific function, such as retrieving, creating, updating, or deleting data.
+-Data Persistence: Server-side applications often store and retrieve data from databases or in-memory storage. JSON format is commonly used for data exchange between the server and client.
+-Practical Application: Express.js is useful for setting up backend servers, handling authentication, and managing API routes.
+-REST API endpoints help in fetching user data, saving journal entries, managing schedules, and updating tasks dynamically.
+-Data persistence allows users to store and retrieve their information efficiently, ensuring seamless interaction with the application.
