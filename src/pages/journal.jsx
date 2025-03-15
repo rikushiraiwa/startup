@@ -36,9 +36,15 @@ export default function Journal() {
     return (
         <div className="d-flex flex-column min-vh-100">
             <Container className="flex-grow-1 w-100">
-                <div className="bg-light p-4 rounded shadow">
+                <div className="bg-light p-4 rounded shadow text-center">
+                    
+                    {/* 📌 カレンダーを中央揃え */}
                     <h2 className="text-success text-center">Calendar</h2>
-                    <Calendar onChange={setDate} value={date} />
+                    <div className="d-flex justify-content-center align-items-center">
+                        <div style={{ width: "fit-content", padding: "10px", margin: "auto" }}>
+                            <Calendar onChange={setDate} value={date} />
+                        </div>
+                    </div>
                     <p className="text-center">Selected Date: {date.toDateString()}</p>
 
                     <h2 className="text-success text-center mt-4">Write your Daily Journal</h2>
