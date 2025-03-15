@@ -1,22 +1,31 @@
 import express from "express";
 import cors from "cors";
+import session from "express-session";
 
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
+// 📌 セッションの設定
+app.use(session({
+    secret: "super-secret-key",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }  // HTTPSで運用する場合は true にする
+}));
+
+// 📌 データストア（仮）
 let journalEntries = [];
 let goals = [];
 let tasks = [];
 let schedule = [];
+let users = {}; // ユーザー情報を保存
 
 // 📌 Journal APIs
-app.get("/api/journal", (req, res) => {
-    res.json(journalEntries);
-});
+app.get("/api/journal", (req, res) => res.json(journalEntries));
 
 app.post("/api/journal", (req, res) => {
     const { entry } = req.body;
@@ -28,9 +37,7 @@ app.post("/api/journal", (req, res) => {
 });
 
 // 📌 Goals APIs
-app.get("/api/goals", (req, res) => {
-    res.json(goals);
-});
+app.get("/api/goals", (req, res) => res.json(goals));
 
 app.post("/api/goals", (req, res) => {
     const { goal } = req.body;
@@ -92,6 +99,45 @@ app.delete("/api/schedule/:index", (req, res) => {
         res.json(schedule);
     } else {
         res.status(400).json({ error: "Invalid index" });
+    }
+});
+
+
+//user register
+app.post("/api/register", (req, res) => {
+    const { userName, password } = req.body;
+    if (!userName.trim() || !password.trim()) {
+        return res.status(400).json({ error: "Username and password required" });
+    }
+    if (users[userName]) {
+        return res.status(400).json({ error: "User already exists" });
+    }
+    users[userName] = { password };
+    res.json({ message: "User registered successfully" });
+});
+
+// Login
+app.post("/api/login", (req, res) => {
+    const { userName, password } = req.body;
+    if (!users[userName] || users[userName].password !== password) {
+        return res.status(401).json({ error: "Invalid username or password" });
+    }
+    req.session.user = userName;
+    res.json({ message: "Login successful", userName });
+});
+
+// Logout
+app.post("/api/logout", (req, res) => {
+    req.session.destroy();
+    res.json({ message: "Logout successful" });
+});
+
+// Check session
+app.get("/api/session", (req, res) => {
+    if (req.session.user) {
+        res.json({ isLoggedIn: true, userName: req.session.user });
+    } else {
+        res.json({ isLoggedIn: false });
     }
 });
 
