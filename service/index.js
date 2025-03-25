@@ -140,39 +140,43 @@ app.patch("/api/tasks/:id", async (req, res) => {
 });
 
 // 📌 Schedule APIs
-app.get("/api/schedule", (req, res) => res.json(schedule));
+app.get("/api/schedule", async (req, res) => {
+    try {
+        const schedule = await scheduleCollection.find().toArray();
+        res.json(schedule);
+    } catch {
+        res.status(500).json({ error: "Failed to fetch schedule" });
+    }
+});
 
-app.post("/api/schedule", (req, res) => {
+app.post("/api/schedule", async (req, res) => {
     const { name, time } = req.body;
-    if (!name.trim() || !time.trim()) {
+    if (!name || !time) {
         return res.status(400).json({ error: "Event name and time are required" });
     }
-    schedule.push({ name, time });
-    res.json(schedule);
-});
-
-app.delete("/api/schedule/:index", (req, res) => {
-    const index = parseInt(req.params.index);
-    if (index >= 0 && index < schedule.length) {
-        schedule.splice(index, 1);
+    try {
+        await scheduleCollection.insertOne({ name, time });
+        const schedule = await scheduleCollection.find().toArray();
         res.json(schedule);
-    } else {
-        res.status(400).json({ error: "Invalid index" });
+    } catch {
+        res.status(500).json({ error: "Failed to save schedule" });
     }
 });
-
 
 //user register
-app.post("/api/register", (req, res) => {
+app.post("/api/register", async (req, res) => {
     const { userName, password } = req.body;
-    if (!userName.trim() || !password.trim()) {
+    if (!userName || !password) {
         return res.status(400).json({ error: "Username and password required" });
     }
-    if (users[userName]) {
-        return res.status(400).json({ error: "User already exists" });
+    try {
+        const user = await userCollection.findOne({ userName });
+        if (user) return res.status(400).json({ error: "User already exists" });
+        await userCollection.insertOne({ userName, password });
+        res.json({ message: "User registered successfully" });
+    } catch {
+        res.status(500).json({ error: "Failed to register user" });
     }
-    users[userName] = { password };
-    res.json({ message: "User registered successfully" });
 });
 
 // Login
