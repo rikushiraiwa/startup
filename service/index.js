@@ -45,26 +45,26 @@ app.use(session({
 
 
 // 📌 Journal APIs
-app.get("/api/journal", (req, res) => {
+app.get("/api/journal", async (req, res) => {
     try {
-        res.json(journalEntries.length ? journalEntries : []);
-    } catch (error) {
-        console.error("Error fetching journal entries:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        const entries = await journalCollection.find().toArray();
+        res.json(entries);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to fetch journal entries" });
     }
 });
 
-app.post("/api/journal", (req, res) => {
+app.post("/api/journal", async (req, res) => {
+    const { entry } = req.body;
+    if (!entry || entry.trim() === "") {
+        return res.status(400).json({ error: "Entry cannot be empty" });
+    }
     try {
-        const { entry } = req.body;
-        if (!entry || entry.trim() === "") {
-            return res.status(400).json({ error: "Entry cannot be empty" });
-        }
-        journalEntries.push(entry);
-        res.json({ message: "Journal entry saved!", entries: journalEntries });
-    } catch (error) {
-        console.error("Error saving journal entry:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        await journalCollection.insertOne({ entry });
+        const entries = await journalCollection.find().toArray();
+        res.json({ message: "Journal entry saved!", entries });
+    } catch (err) {
+        res.status(500).json({ error: "Failed to save journal entry" });
     }
 });
 
