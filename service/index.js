@@ -1,6 +1,10 @@
-import { MongoClient } from "mongodb";
+import express from "express";
+import cors from "cors";
+import session from "express-session";
 import fs from "fs";
+import { MongoClient } from "mongodb";
 
+// DB Connection Setup
 const config = JSON.parse(fs.readFileSync("dbConfig.json"));
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
@@ -11,12 +15,6 @@ const goalCollection = db.collection("goals");
 const taskCollection = db.collection("tasks");
 const scheduleCollection = db.collection("schedule");
 const userCollection = db.collection("users");
-
-
-
-import express from "express";
-import cors from "cors";
-import session from "express-session";
 
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -49,7 +47,7 @@ app.get("/api/journal", async (req, res) => {
     try {
         const entries = await journalCollection.find().toArray();
         res.json(entries);
-    } catch (err) {
+    } catch {
         res.status(500).json({ error: "Failed to fetch journal entries" });
     }
 });
@@ -63,22 +61,36 @@ app.post("/api/journal", async (req, res) => {
         await journalCollection.insertOne({ entry });
         const entries = await journalCollection.find().toArray();
         res.json({ message: "Journal entry saved!", entries });
-    } catch (err) {
+    } catch {
         res.status(500).json({ error: "Failed to save journal entry" });
     }
 });
 
-// 📌 Goals APIs
-app.get("/api/goals", (req, res) => res.json(goals));
 
-app.post("/api/goals", (req, res) => {
+// 📌 Goals APIs
+app.get("/api/goals", async (req, res) => {
+    try {
+        const goals = await goalCollection.find().toArray();
+        res.json(goals);
+    } catch {
+        res.status(500).json({ error: "Failed to fetch goals" });
+    }
+});
+
+app.post("/api/goals", async (req, res) => {
     const { goal } = req.body;
     if (!goal || goal.trim() === "") {
         return res.status(400).json({ error: "Goal cannot be empty" });
     }
-    goals.push(goal);
-    res.json({ message: "Goal saved!", goals });
+    try {
+        await goalCollection.insertOne({ goal });
+        const goals = await goalCollection.find().toArray();
+        res.json({ message: "Goal saved!", goals });
+    } catch {
+        res.status(500).json({ error: "Failed to save goal" });
+    }
 });
+
 
 // 📌 Tasks APIs
 app.get("/api/tasks", (req, res) => res.json(tasks));
