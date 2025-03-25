@@ -180,22 +180,23 @@ app.post("/api/register", async (req, res) => {
 });
 
 // Login
-app.post("/api/login", (req, res) => {
+app.post("/api/login", async (req, res) => {
     const { userName, password } = req.body;
-    if (!users[userName] || users[userName].password !== password) {
-        return res.status(401).json({ error: "Invalid username or password" });
+    try {
+        const user = await userCollection.findOne({ userName, password });
+        if (!user) return res.status(401).json({ error: "Invalid username or password" });
+        req.session.user = userName;
+        res.json({ message: "Login successful", userName });
+    } catch {
+        res.status(500).json({ error: "Login failed" });
     }
-    req.session.user = userName;
-    res.json({ message: "Login successful", userName });
 });
 
-// Logout
 app.post("/api/logout", (req, res) => {
     req.session.destroy();
     res.json({ message: "Logout successful" });
 });
 
-// Check session
 app.get("/api/session", (req, res) => {
     if (req.session.user) {
         res.json({ isLoggedIn: true, userName: req.session.user });
@@ -204,7 +205,6 @@ app.get("/api/session", (req, res) => {
     }
 });
 
-// 📌 サーバー起動
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
