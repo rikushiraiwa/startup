@@ -37,7 +37,7 @@ export default function Journal() {
         <div className="d-flex flex-column min-vh-100">
             <Container className="flex-grow-1 w-100">
                 <div className="bg-light p-4 rounded shadow text-center">
-                    
+
                     {/* 📌 カレンダーを中央揃え */}
                     <h2 className="text-success text-center">Calendar</h2>
                     <div className="d-flex justify-content-center align-items-center">
@@ -64,13 +64,13 @@ export default function Journal() {
                     </Form>
 
                     <h2 className="text-success text-center mt-4">Saved Journal Entries</h2>
-                    
+
                     {/* 📌 スクロール可能なエリアを追加 */}
                     <div className="overflow-auto" style={{ maxHeight: "300px", border: "1px solid #ddd", padding: "10px" }}>
                         <ul className="list-group">
                             {savedEntries.length > 0 ? (
                                 savedEntries.map((e, index) => (
-                                    <li key={index} className="list-group-item">{e}</li>
+                                    <li key={e._id || index} className="list-group-item">{e.entry}</li>
                                 ))
                             ) : (
                                 <li className="list-group-item text-muted">No journal entries yet.</li>

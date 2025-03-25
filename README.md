@@ -117,11 +117,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **User registration** - I did not complete this part of the deliverable.
-- [ ] **User login and logout** - I did not complete this part of the deliverable.
-- [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Restricts functionality based on authentication** - I did not complete this part of the deliverable.
+- [x] **User registration** - I created a Register page that allows users to input a username and password, which are then stored in MongoDB through the /api/register endpoint.
+- [x] **User login and logout** - I implemented login and logout functionality using sessions. When a user logs in, their session is stored on the server, and logout destroys the session.
+- [x] **Stores data in MongoDB** - I connected the application to MongoDB Atlas and stored user data, journal entries, goals, tasks, and schedules in corresponding collections.
+- [x] **Stores credentials in MongoDB** -  I stored user credentials (username and password) securely in the users collection in MongoDB.
+- [x] **Restricts functionality based on authentication** - I checked the session on page load using /api/session to determine whether a user is logged in and restricted access accordingly.
 
 ## 🚀 WebSocket deliverable
 

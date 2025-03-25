@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 
 import Home from "./pages/home";
 import Schedule from "./pages/schedule";
@@ -18,18 +19,44 @@ function NotFound() {
 }
 
 export default function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch("http://localhost:4000/api/session", {
+            credentials: "include",
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setIsLoggedIn(data.isLoggedIn);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error("Session check failed", err);
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading) return <div>Loading...</div>;
+
     return (
         <BrowserRouter>
             <div className="d-flex flex-column min-vh-100" style={{ backgroundColor: "#E8F5E9" }}>
-                
-                {/* ナビゲーションバーを固定＆デザイン改善 */}
                 <header className="container-fluid sticky-top shadow">
                     <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#388E3C", padding: "15px 0" }}>
                         <div className="container">
                             <NavLink className="navbar-brand fw-bold fs-4" to="/" style={{ color: "#FFFFFF" }}>
                                 Life Hack Journal
                             </NavLink>
-                            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                            <button
+                                className="navbar-toggler"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#navbarNav"
+                                aria-controls="navbarNav"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation"
+                            >
                                 <span className="navbar-toggler-icon"></span>
                             </button>
                             <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -69,11 +96,11 @@ export default function App() {
                     <Routes>
                         <Route path="/" element={<Login />} />
                         <Route path="/register" element={<Register />} />
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/journal" element={<Journal />} />
-                        <Route path="/schedule" element={<Schedule />} />
-                        <Route path="/goal" element={<Goal />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/home" element={isLoggedIn ? <Home /> : <Login />} />
+                        <Route path="/journal" element={isLoggedIn ? <Journal /> : <Login />} />
+                        <Route path="/schedule" element={isLoggedIn ? <Schedule /> : <Login />} />
+                        <Route path="/goal" element={isLoggedIn ? <Goal /> : <Login />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>

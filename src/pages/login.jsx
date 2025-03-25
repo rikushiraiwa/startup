@@ -21,30 +21,23 @@ export default function Login() {
     }, []);
 
     const handleLogin = async () => {
-        if (!userName.trim() || !password.trim()) return;
-
-        try {
-            const res = await fetch("http://localhost:4000/api/login", {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ userName, password }),
-            });
-
-            if (!res.ok) {
-                alert("Invalid username or password");
-                return;
-            }
-
+        const res = await fetch("http://localhost:4000/api/login", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userName, password }),
+        });
+    
+        if (res.ok) {
             const data = await res.json();
+            setUserName(data.userName);
             setIsLoggedIn(true);
-            setPassword("");
-        } catch (err) {
-            console.error("Login error:", err);
+            window.location.href = "/home";  // ← リロードで確実に状態反映
+        } else {
+            alert("Login failed");
         }
     };
+    
 
     // ✅ ログアウト処理（セッション破棄）
     const handleLogout = () => {
