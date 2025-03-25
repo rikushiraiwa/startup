@@ -93,34 +93,49 @@ app.post("/api/goals", async (req, res) => {
 
 
 // 📌 Tasks APIs
-app.get("/api/tasks", (req, res) => res.json(tasks));
+app.get("/api/tasks", async (req, res) => {
+    try {
+        const tasks = await taskCollection.find().toArray();
+        res.json(tasks);
+    } catch {
+        res.status(500).json({ error: "Failed to fetch tasks" });
+    }
+});
 
-app.post("/api/tasks", (req, res) => {
+app.post("/api/tasks", async (req, res) => {
     const { text } = req.body;
     if (!text || text.trim() === "") {
         return res.status(400).json({ error: "Task cannot be empty" });
     }
-    tasks.push({ text, completed: false });
-    res.json(tasks);
-});
-
-app.delete("/api/tasks/:index", (req, res) => {
-    const index = parseInt(req.params.index);
-    if (index >= 0 && index < tasks.length) {
-        tasks.splice(index, 1);
+    try {
+        await taskCollection.insertOne({ text, completed: false });
+        const tasks = await taskCollection.find().toArray();
         res.json(tasks);
-    } else {
-        res.status(400).json({ error: "Invalid index" });
+    } catch {
+        res.status(500).json({ error: "Failed to add task" });
     }
 });
 
-app.patch("/api/tasks/:index", (req, res) => {
-    const index = parseInt(req.params.index);
-    if (index >= 0 && index < tasks.length) {
-        tasks[index].completed = !tasks[index].completed;
+app.delete("/api/tasks/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        await taskCollection.deleteOne({ _id: new ObjectId(id) });
+        const tasks = await taskCollection.find().toArray();
         res.json(tasks);
-    } else {
-        res.status(400).json({ error: "Invalid index" });
+    } catch {
+        res.status(400).json({ error: "Invalid task id" });
+    }
+});
+
+app.patch("/api/tasks/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const task = await taskCollection.findOne({ _id: new ObjectId(id) });
+        await taskCollection.updateOne({ _id: task._id }, { $set: { completed: !task.completed } });
+        const tasks = await taskCollection.find().toArray();
+        res.json(tasks);
+    } catch {
+        res.status(400).json({ error: "Invalid task id" });
     }
 });
 
