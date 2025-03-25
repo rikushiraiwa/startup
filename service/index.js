@@ -2,16 +2,13 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import fs from "fs";
-import { MongoClient } from "mongodb";
-import { ObjectId } from "mongodb";
-
+import { MongoClient, ObjectId } from "mongodb";
 
 // DB Connection Setup
 const config = JSON.parse(fs.readFileSync("dbConfig.json"));
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
 const db = client.db("startup");
-
 
 const journalCollection = db.collection("journal");
 const goalCollection = db.collection("goals");
@@ -26,12 +23,11 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-// 📌 セッションの設定
 app.use(session({
     secret: "super-secret-key",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }  // HTTPSで運用する場合は true にする
+    cookie: { secure: false }
 }));
 
 (async function testConnection() {
@@ -44,9 +40,17 @@ app.use(session({
     }
 })();
 
+// 認証チェックミドルウェア
+function requireLogin(req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        res.status(401).json({ error: "Unauthorized" });
+    }
+}
 
 // 📌 Journal APIs
-app.get("/api/journal", async (req, res) => {
+app.get("/api/journal", requireLogin, async (req, res) => {
     try {
         const entries = await journalCollection.find().toArray();
         res.json(entries);
@@ -55,25 +59,22 @@ app.get("/api/journal", async (req, res) => {
     }
 });
 
-app.post("/api/journal", async (req, res) => {
+app.post("/api/journal", requireLogin, async (req, res) => {
     const { entry } = req.body;
     if (!entry || entry.trim() === "") {
         return res.status(400).json({ error: "Entry cannot be empty" });
     }
-
     try {
         await journalCollection.insertOne({ entry });
         const entries = await journalCollection.find().toArray();
         res.json({ message: "Journal entry saved!", entries });
     } catch (err) {
-        console.error("❌ Error inserting journal entry:", err); // ←ここを追加
         res.status(500).json({ error: "Failed to save journal entry" });
     }
 });
 
-
 // 📌 Goals APIs
-app.get("/api/goals", async (req, res) => {
+app.get("/api/goals", requireLogin, async (req, res) => {
     try {
         const goals = await goalCollection.find().toArray();
         res.json(goals);
@@ -82,7 +83,7 @@ app.get("/api/goals", async (req, res) => {
     }
 });
 
-app.post("/api/goals", async (req, res) => {
+app.post("/api/goals", requireLogin, async (req, res) => {
     const { goal } = req.body;
     if (!goal || goal.trim() === "") {
         return res.status(400).json({ error: "Goal cannot be empty" });
@@ -96,9 +97,8 @@ app.post("/api/goals", async (req, res) => {
     }
 });
 
-
 // 📌 Tasks APIs
-app.get("/api/tasks", async (req, res) => {
+app.get("/api/tasks", requireLogin, async (req, res) => {
     try {
         const tasks = await taskCollection.find().toArray();
         res.json(tasks);
@@ -107,7 +107,7 @@ app.get("/api/tasks", async (req, res) => {
     }
 });
 
-app.post("/api/tasks", async (req, res) => {
+app.post("/api/tasks", requireLogin, async (req, res) => {
     const { text } = req.body;
     if (!text || text.trim() === "") {
         return res.status(400).json({ error: "Task cannot be empty" });
@@ -117,13 +117,11 @@ app.post("/api/tasks", async (req, res) => {
         const tasks = await taskCollection.find().toArray();
         res.json(tasks);
     } catch (err) {
-        console.error("❌ Failed to add task:", err); // ← 追加
         res.status(500).json({ error: "Failed to add task" });
     }
 });
 
-
-app.delete("/api/tasks/:id", async (req, res) => {
+app.delete("/api/tasks/:id", requireLogin, async (req, res) => {
     try {
         const { id } = req.params;
         await taskCollection.deleteOne({ _id: new ObjectId(id) });
@@ -134,7 +132,7 @@ app.delete("/api/tasks/:id", async (req, res) => {
     }
 });
 
-app.patch("/api/tasks/:id", async (req, res) => {
+app.patch("/api/tasks/:id", requireLogin, async (req, res) => {
     try {
         const { id } = req.params;
         const task = await taskCollection.findOne({ _id: new ObjectId(id) });
@@ -147,7 +145,7 @@ app.patch("/api/tasks/:id", async (req, res) => {
 });
 
 // 📌 Schedule APIs
-app.get("/api/schedule", async (req, res) => {
+app.get("/api/schedule", requireLogin, async (req, res) => {
     try {
         const schedule = await scheduleCollection.find().toArray();
         res.json(schedule);
@@ -156,7 +154,7 @@ app.get("/api/schedule", async (req, res) => {
     }
 });
 
-app.post("/api/schedule", async (req, res) => {
+app.post("/api/schedule", requireLogin, async (req, res) => {
     const { name, time } = req.body;
     if (!name || !time) {
         return res.status(400).json({ error: "Event name and time are required" });
@@ -165,32 +163,26 @@ app.post("/api/schedule", async (req, res) => {
         await scheduleCollection.insertOne({ name, time });
         const schedule = await scheduleCollection.find().toArray();
         res.json(schedule);
-    } catch (err) {
-        console.error("❌ Failed to save schedule:", err); // ← 追加
+    } catch {
         res.status(500).json({ error: "Failed to save schedule" });
     }
 });
 
-app.delete("/api/schedule/:id", async (req, res) => {
+app.delete("/api/schedule/:id", requireLogin, async (req, res) => {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
         return res.status(400).json({ error: "Invalid schedule id format" });
     }
-
     try {
         await scheduleCollection.deleteOne({ _id: new ObjectId(id) });
         const updatedSchedule = await scheduleCollection.find().toArray();
         res.json(updatedSchedule);
-    } catch (err) {
-        console.error("❌ Failed to delete schedule:", err);
+    } catch {
         res.status(500).json({ error: "Failed to delete schedule" });
     }
 });
 
-
-
-
-//user register
+// Auth APIs
 app.post("/api/register", async (req, res) => {
     const { userName, password } = req.body;
     if (!userName || !password) {
@@ -206,7 +198,6 @@ app.post("/api/register", async (req, res) => {
     }
 });
 
-// Login
 app.post("/api/login", async (req, res) => {
     const { userName, password } = req.body;
     try {
