@@ -1,3 +1,19 @@
+import { MongoClient } from "mongodb";
+import fs from "fs";
+
+const config = JSON.parse(fs.readFileSync("dbConfig.json"));
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+const client = new MongoClient(url);
+const db = client.db("startup");
+
+const journalCollection = db.collection("journal");
+const goalCollection = db.collection("goals");
+const taskCollection = db.collection("tasks");
+const scheduleCollection = db.collection("schedule");
+const userCollection = db.collection("users");
+
+
+
 import express from "express";
 import cors from "cors";
 import session from "express-session";
@@ -17,12 +33,16 @@ app.use(session({
     cookie: { secure: false }  // HTTPSで運用する場合は true にする
 }));
 
-// 📌 データストア（仮）
-let journalEntries = [];
-let goals = [];
-let tasks = [];
-let schedule = [];
-let users = {}; // ユーザー情報を保存
+(async function testConnection() {
+    try {
+        await db.command({ ping: 1 });
+        console.log("Connected to MongoDB Atlas successfully.");
+    } catch (err) {
+        console.error("MongoDB connection failed:", err.message);
+        process.exit(1);
+    }
+})();
+
 
 // 📌 Journal APIs
 app.get("/api/journal", (req, res) => {
