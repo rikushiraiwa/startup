@@ -57,11 +57,13 @@ app.post("/api/journal", async (req, res) => {
     if (!entry || entry.trim() === "") {
         return res.status(400).json({ error: "Entry cannot be empty" });
     }
+
     try {
         await journalCollection.insertOne({ entry });
         const entries = await journalCollection.find().toArray();
         res.json({ message: "Journal entry saved!", entries });
-    } catch {
+    } catch (err) {
+        console.error("❌ Error inserting journal entry:", err); // ←ここを追加
         res.status(500).json({ error: "Failed to save journal entry" });
     }
 });
