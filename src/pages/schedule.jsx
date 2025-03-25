@@ -8,49 +8,71 @@ export default function Schedule() {
     const [eventTime, setEventTime] = useState("");
 
     useEffect(() => {
-        const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        const storedSchedule = JSON.parse(localStorage.getItem("schedule")) || [];
-        setTasks(storedTasks);
-        setSchedule(storedSchedule);
+        fetch("/api/tasks")
+            .then((res) => res.json())
+            .then((data) => setTasks(data))
+            .catch((err) => console.error("Failed to load tasks:", err));
+
+        fetch("/api/schedule")
+            .then((res) => res.json())
+            .then((data) => setSchedule(data))
+            .catch((err) => console.error("Failed to load schedule:", err));
     }, []);
 
     const handleAddTask = () => {
         if (!newTask.trim()) return;
 
-        const updatedTasks = [...tasks, { text: newTask, completed: false }];
-        setTasks(updatedTasks);
-        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-        setNewTask("");
+        fetch("/api/tasks", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: newTask }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setTasks(data);
+                setNewTask("");
+            })
+            .catch((err) => console.error("Failed to add task:", err));
     };
 
-    const toggleTaskCompletion = (index) => {
-        const updatedTasks = [...tasks];
-        updatedTasks[index].completed = !updatedTasks[index].completed;
-        setTasks(updatedTasks);
-        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    };
-
-    const handleDeleteTask = (index) => {
-        const updatedTasks = tasks.filter((_, i) => i !== index);
-        setTasks(updatedTasks);
-        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    const handleDeleteTask = (id) => {
+        fetch(`/api/tasks/${id}`, {
+            method: "DELETE",
+        })
+            .then((res) => res.json())
+            .then((data) => setTasks(data))
+            .catch((err) => console.error("Failed to delete task:", err));
     };
 
     const handleAddSchedule = () => {
         if (!eventName.trim() || !eventTime.trim()) return;
 
-        const updatedSchedule = [...schedule, { name: eventName, time: eventTime }];
-        setSchedule(updatedSchedule);
-        localStorage.setItem("schedule", JSON.stringify(updatedSchedule));
-        setEventName("");
-        setEventTime("");
+        fetch("/api/schedule", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: eventName, time: eventTime }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setSchedule(data);
+                setEventName("");
+                setEventTime("");
+            })
+            .catch((err) => console.error("Failed to add schedule:", err));
     };
 
-    const handleDeleteSchedule = (index) => {
-        const updatedSchedule = schedule.filter((_, i) => i !== index);
-        setSchedule(updatedSchedule);
-        localStorage.setItem("schedule", JSON.stringify(updatedSchedule));
+    const handleDeleteSchedule = (id) => {
+        fetch(`/api/schedule/${id}`, {
+            method: "DELETE",
+        })
+            .then((res) => {
+                if (!res.ok) throw new Error("Failed to delete schedule");
+                return res.json();
+            })
+            .then((data) => setSchedule(data))
+            .catch((err) => console.error("Failed to delete schedule:", err));
     };
+    
 
     return (
         <div className="container-fluid bg-light-green min-vh-100 d-flex flex-column align-items-center py-5">
@@ -62,21 +84,14 @@ export default function Schedule() {
                 <h2 className="text-success fw-bold">Plan Your Day</h2>
                 <ul className="list-group text-start">
                     {tasks.length > 0 ? (
-                        tasks.map((task, index) => (
-                            <li key={index} className="list-group-item d-flex align-items-center">
+                        tasks.map((task) => (
+                            <li key={task._id} className="list-group-item d-flex align-items-center">
                                 <input
                                     type="checkbox"
                                     className="me-2"
-                                    checked={task.completed}
-                                    onChange={() => toggleTaskCompletion(index)}
+                                    onChange={() => handleDeleteTask(task._id)}
                                 />
-                                <span className={task.completed ? "text-decoration-line-through" : ""}>{task.text}</span>
-                                <button
-                                    className="btn btn-danger btn-sm ms-auto"
-                                    onClick={() => handleDeleteTask(index)}
-                                >
-                                    ❌
-                                </button>
+                                <span>{task.text}</span>
                             </li>
                         ))
                     ) : (
@@ -123,12 +138,12 @@ export default function Schedule() {
                 <h3 className="text-success fw-bold mt-4">Today's Schedule</h3>
                 <ul className="list-group text-start">
                     {schedule.length > 0 ? (
-                        schedule.map((event, index) => (
-                            <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+                        schedule.map((event) => (
+                            <li key={event._id} className="list-group-item d-flex justify-content-between align-items-center">
                                 {event.time} - {event.name}
                                 <button
                                     className="btn btn-danger btn-sm"
-                                    onClick={() => handleDeleteSchedule(index)}
+                                    onClick={() => handleDeleteSchedule(event._id)}  // ← 修正ここ！
                                 >
                                     ❌
                                 </button>

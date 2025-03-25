@@ -7,6 +7,7 @@ import Schedule from "./pages/schedule";
 import Journal from "./pages/journal";
 import Goal from "./pages/goal";
 import Login from "./pages/login";
+import Register from "./pages/Register";
 
 function NotFound() {
     return (
@@ -67,6 +68,7 @@ export default function App() {
                 <main className="container flex-grow-1 mt-4">
                     <Routes>
                         <Route path="/" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
                         <Route path="/home" element={<Home />} />
                         <Route path="/journal" element={<Journal />} />
                         <Route path="/schedule" element={<Schedule />} />

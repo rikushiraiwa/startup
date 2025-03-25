@@ -7,30 +7,60 @@ export default function Login() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("userName");
-        if (storedUser) {
-            setUserName(storedUser);
-            setIsLoggedIn(true);
-        }
+        fetch("http://localhost:4000/api/session", {
+            credentials: "include",
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.isLoggedIn) {
+                    setUserName(data.userName);
+                    setIsLoggedIn(true);
+                }
+            })
+            .catch((err) => console.error("Session check failed:", err));
     }, []);
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (!userName.trim() || !password.trim()) return;
 
-        localStorage.setItem("userName", userName);
-        setIsLoggedIn(true);
-        setPassword("");
+        try {
+            const res = await fetch("http://localhost:4000/api/login", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ userName, password }),
+            });
+
+            if (!res.ok) {
+                alert("Invalid username or password");
+                return;
+            }
+
+            const data = await res.json();
+            setIsLoggedIn(true);
+            setPassword("");
+        } catch (err) {
+            console.error("Login error:", err);
+        }
     };
 
+    // ✅ ログアウト処理（セッション破棄）
     const handleLogout = () => {
-        localStorage.removeItem("userName");
-        setUserName("");
-        setIsLoggedIn(false);
+        fetch("http://localhost:4000/api/logout", {
+            method: "POST",
+            credentials: "include",
+        })
+            .then(() => {
+                setUserName("");
+                setIsLoggedIn(false);
+            })
+            .catch((err) => console.error("Logout failed:", err));
     };
 
     return (
         <div className="container-fluid min-vh-100 d-flex flex-column align-items-center py-5" style={{ backgroundColor: "#E8F5E9" }}>
-            
             <header className="text-center mb-4">
                 <h1 className="text-success fw-bold">Life Hack Journal</h1>
             </header>
@@ -67,6 +97,16 @@ export default function Login() {
                                 Login
                             </Button>
                         </Form>
+
+                        {!isLoggedIn && (
+                            <p className="mt-3">
+                                Don't have an account?{" "}
+                                <a href="/register" className="text-decoration-none text-primary">
+                                    Register here
+                                </a>
+                            </p>
+                        )}
+
                     </>
                 )}
             </Container>
