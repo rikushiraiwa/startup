@@ -3,12 +3,15 @@ import cors from "cors";
 import session from "express-session";
 import fs from "fs";
 import { MongoClient } from "mongodb";
+import { ObjectId } from "mongodb";
+
 
 // DB Connection Setup
 const config = JSON.parse(fs.readFileSync("dbConfig.json"));
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
 const db = client.db("startup");
+
 
 const journalCollection = db.collection("journal");
 const goalCollection = db.collection("goals");
@@ -113,10 +116,12 @@ app.post("/api/tasks", async (req, res) => {
         await taskCollection.insertOne({ text, completed: false });
         const tasks = await taskCollection.find().toArray();
         res.json(tasks);
-    } catch {
+    } catch (err) {
+        console.error("❌ Failed to add task:", err); // ← 追加
         res.status(500).json({ error: "Failed to add task" });
     }
 });
+
 
 app.delete("/api/tasks/:id", async (req, res) => {
     try {
@@ -160,10 +165,30 @@ app.post("/api/schedule", async (req, res) => {
         await scheduleCollection.insertOne({ name, time });
         const schedule = await scheduleCollection.find().toArray();
         res.json(schedule);
-    } catch {
+    } catch (err) {
+        console.error("❌ Failed to save schedule:", err); // ← 追加
         res.status(500).json({ error: "Failed to save schedule" });
     }
 });
+
+app.delete("/api/schedule/:id", async (req, res) => {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "Invalid schedule id format" });
+    }
+
+    try {
+        await scheduleCollection.deleteOne({ _id: new ObjectId(id) });
+        const updatedSchedule = await scheduleCollection.find().toArray();
+        res.json(updatedSchedule);
+    } catch (err) {
+        console.error("❌ Failed to delete schedule:", err);
+        res.status(500).json({ error: "Failed to delete schedule" });
+    }
+});
+
+
+
 
 //user register
 app.post("/api/register", async (req, res) => {
