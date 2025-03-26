@@ -2,7 +2,10 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import { MongoClient, ObjectId } from "mongodb";
+
 
 // DB Connection Setup
 const config = JSON.parse(fs.readFileSync("dbConfig.json"));
@@ -19,16 +22,33 @@ const userCollection = db.collection("users");
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({
+    origin: function (origin, callback) {
+        const allowedOrigins = [
+            "http://localhost:5173",
+            "https://startup.lifehackjournal.click"
+        ];
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true
+}));
 app.use(express.json());
-app.use(express.static("public"));
 
 app.use(session({
     secret: "super-secret-key",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: {
+        secure: false,
+        sameSite: "lax"
+    }
 }));
+
+
 
 (async function testConnection() {
     try {
@@ -182,7 +202,7 @@ app.delete("/api/schedule/:id", requireLogin, async (req, res) => {
     }
 });
 
-// Auth APIs
+// 📌 Auth APIs
 app.post("/api/register", async (req, res) => {
     const { userName, password } = req.body;
     if (!userName || !password) {
@@ -221,6 +241,15 @@ app.get("/api/session", (req, res) => {
     } else {
         res.json({ isLoggedIn: false });
     }
+});
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.listen(port, () => {
