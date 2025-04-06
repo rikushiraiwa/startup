@@ -6,8 +6,13 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    // ✅ 環境に応じて API ベースURL を切り替え
+    const apiBase = import.meta.env.PROD
+        ? "https://startup.lifehackjournal.click"
+        : "";
+
     useEffect(() => {
-        fetch("http://localhost:4000/api/session", {
+        fetch(`${apiBase}/api/session`, {
             credentials: "include",
         })
             .then((res) => res.json())
@@ -21,27 +26,25 @@ export default function Login() {
     }, []);
 
     const handleLogin = async () => {
-        const res = await fetch("http://localhost:4000/api/login", {
+        const res = await fetch(`${apiBase}/api/login`, {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ userName, password }),
         });
-    
+
         if (res.ok) {
             const data = await res.json();
             setUserName(data.userName);
             setIsLoggedIn(true);
-            window.location.href = "/home";  // ← リロードで確実に状態反映
+            window.location.href = "/home";
         } else {
             alert("Login failed");
         }
     };
-    
 
-    // ✅ ログアウト処理（セッション破棄）
     const handleLogout = () => {
-        fetch("http://localhost:4000/api/logout", {
+        fetch(`${apiBase}/api/logout`, {
             method: "POST",
             credentials: "include",
         })
@@ -99,7 +102,6 @@ export default function Login() {
                                 </a>
                             </p>
                         )}
-
                     </>
                 )}
             </Container>

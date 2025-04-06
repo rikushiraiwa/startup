@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { MongoClient, ObjectId } from "mongodb";
+import { WebSocketServer } from 'ws';
 
 
 // DB Connection Setup
@@ -252,6 +253,18 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
+});
+
+
+const wss = new WebSocketServer({ server });
+wss.on('connection', (ws) => {
+    console.log('🟢 WebSocket connected!');
+    ws.on('message', (data) => {
+        const msg = data.toString();
+        console.log('📩 Received:', msg);
+        ws.send(`I heard you say: "${msg}"`);
+    });
+    ws.send('🎉 WebSocket connection established!');
 });

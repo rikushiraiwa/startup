@@ -7,13 +7,18 @@ export default function Schedule() {
     const [eventName, setEventName] = useState("");
     const [eventTime, setEventTime] = useState("");
 
+    // ✅ 環境に応じた API ベースURL
+    const apiBase = import.meta.env.PROD
+        ? "https://startup.lifehackjournal.click"
+        : "";
+
     useEffect(() => {
-        fetch("/api/tasks")
+        fetch(`${apiBase}/api/tasks`)
             .then((res) => res.json())
             .then((data) => setTasks(data))
             .catch((err) => console.error("Failed to load tasks:", err));
 
-        fetch("/api/schedule")
+        fetch(`${apiBase}/api/schedule`)
             .then((res) => res.json())
             .then((data) => setSchedule(data))
             .catch((err) => console.error("Failed to load schedule:", err));
@@ -22,7 +27,7 @@ export default function Schedule() {
     const handleAddTask = () => {
         if (!newTask.trim()) return;
 
-        fetch("/api/tasks", {
+        fetch(`${apiBase}/api/tasks`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text: newTask }),
@@ -36,7 +41,7 @@ export default function Schedule() {
     };
 
     const handleDeleteTask = (id) => {
-        fetch(`/api/tasks/${id}`, {
+        fetch(`${apiBase}/api/tasks/${id}`, {
             method: "DELETE",
         })
             .then((res) => res.json())
@@ -47,7 +52,7 @@ export default function Schedule() {
     const handleAddSchedule = () => {
         if (!eventName.trim() || !eventTime.trim()) return;
 
-        fetch("/api/schedule", {
+        fetch(`${apiBase}/api/schedule`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name: eventName, time: eventTime }),
@@ -62,7 +67,7 @@ export default function Schedule() {
     };
 
     const handleDeleteSchedule = (id) => {
-        fetch(`/api/schedule/${id}`, {
+        fetch(`${apiBase}/api/schedule/${id}`, {
             method: "DELETE",
         })
             .then((res) => {
@@ -72,7 +77,6 @@ export default function Schedule() {
             .then((data) => setSchedule(data))
             .catch((err) => console.error("Failed to delete schedule:", err));
     };
-    
 
     return (
         <div className="container-fluid bg-light-green min-vh-100 d-flex flex-column align-items-center py-5">
@@ -143,7 +147,7 @@ export default function Schedule() {
                                 {event.time} - {event.name}
                                 <button
                                     className="btn btn-danger btn-sm"
-                                    onClick={() => handleDeleteSchedule(event._id)}  // ← 修正ここ！
+                                    onClick={() => handleDeleteSchedule(event._id)}
                                 >
                                     ❌
                                 </button>

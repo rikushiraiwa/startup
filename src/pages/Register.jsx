@@ -7,11 +7,16 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    // ✅ 環境に応じた API ベースURL
+    const apiBase = import.meta.env.PROD
+        ? "https://startup.lifehackjournal.click"
+        : "";
+
     const handleRegister = async () => {
         if (!userName.trim() || !password.trim()) return;
 
         try {
-            const res = await fetch("http://localhost:4000/api/register", {
+            const res = await fetch(`${apiBase}/api/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
