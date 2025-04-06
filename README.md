@@ -132,4 +132,5 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Data sent over WebSocket connection** - Sent message "Hello from client!" on connection; backend logs confirmed receipt and sent a response.
 - [x] **WebSocket data displayed** - WebSocket response is displayed in the frontend with:
 I heard you say: "Hello from client!" shown on the Home page.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Application is fully functional** - Full functionality tested on both local and production (https://startup.lifehackjournal.click).
+Nginx configured for WebSocket. Application shows real-time WebSocket communication.
