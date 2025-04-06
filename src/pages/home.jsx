@@ -66,9 +66,6 @@ export default function Home() {
 
             <Container className="bg-white shadow-sm rounded p-4 text-center" style={{ maxWidth: "700px", width: "90%" }}>
                 <h2 className="text-success fw-bold">Welcome to Life Hack Journal</h2>
-                <div className="text-center my-3">
-                    <img src={placeholderImage} alt="Placeholder" className="rounded-circle" width="120" />
-                </div>
                 <p className="text-muted">This is the journal to achieve your life goal</p>
                 <p className="text-muted">Setting Goals, make ToDos, set schedules, reflect by writing journal</p>
 
