@@ -30,28 +30,35 @@ export default function Home() {
 
     // ✅ WebSocket 接続と受信処理
     useEffect(() => {
-        const protocol = window.location.protocol === "http:" ? "ws" : "wss";
-        const socket = new WebSocket(`${protocol}://${window.location.host}`);
+        const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+        const socket = new WebSocket(`${protocol}://${window.location.hostname}:4000`);
+
+        console.log("🔌 Connecting WebSocket...");
 
         socket.onopen = () => {
-            console.log("WebSocket connected");
+            console.log("✅ WebSocket connected!");
+            setWebsocketData("✅ Connected to WebSocket");
             socket.send("Hello from client!");
         };
 
         socket.onmessage = (event) => {
+            console.log("📨 Message received:", event.data);
             setWebsocketData(event.data);
         };
 
         socket.onerror = (err) => {
-            console.error("WebSocket error:", err);
+            console.error("❌ WebSocket error:", err);
+            setWebsocketData("❌ WebSocket error");
         };
 
         socket.onclose = () => {
-            console.log("WebSocket closed");
+            console.warn("🔌 WebSocket closed");
+            setWebsocketData("🔌 WebSocket disconnected");
         };
 
-        return () => socket.close(); // クリーンアップ
+        return () => socket.close();
     }, []);
+
 
     return (
         <div className="container-fluid vh-100 d-flex flex-column align-items-center py-4" style={{ backgroundColor: "#E8F5E9" }}>
