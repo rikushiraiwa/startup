@@ -6,12 +6,10 @@ const placeholderImage = "/placeholder.png";
 export default function Home() {
     const [websocketData, setWebsocketData] = useState("Waiting for WebSocket connection...");
 
-    // ✅ 環境に応じた API ベースURL
     const apiBase = import.meta.env.PROD
         ? "https://startup.lifehackjournal.click"
         : "";
 
-    // ✅ ログイン状態をチェック
     useEffect(() => {
         fetch(`${apiBase}/api/session`, {
             credentials: "include",
@@ -28,7 +26,6 @@ export default function Home() {
             });
     }, []);
 
-    // ✅ WebSocket 接続と受信処理
     useEffect(() => {
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
         const socket = new WebSocket(`${protocol}://${window.location.host}`); // ← ✅ ポート指定不要
