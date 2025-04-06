@@ -31,7 +31,8 @@ export default function Home() {
     // ✅ WebSocket 接続と受信処理
     useEffect(() => {
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-        const socket = new WebSocket(`${protocol}://${window.location.hostname}:4000`);
+        const socket = new WebSocket(`${protocol}://${window.location.host}`); // ← ✅ ポート指定不要
+
 
         console.log("🔌 Connecting WebSocket...");
 
