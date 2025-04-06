@@ -46,7 +46,8 @@ Used max-width and percentage-based widths so the layout adapts to different scr
 -REST API endpoints help in fetching user data, saving journal entries, managing schedules, and updating tasks dynamically.
 -Data persistence allows users to store and retrieve their information efficiently, ensuring seamless interaction with the application.
 
-#startupDB
+
+# startupDB
 -Learned how to use MongoDB Atlas to store and manage data in the cloud
 -Understood the concept of data persistence and how it enables long-term storage of user data
 -Realized the importance of using JSON format for efficient communication between client and server
@@ -57,3 +58,15 @@ Used max-width and percentage-based widths so the layout adapts to different scr
 -Learned how to manage user sessions and authentication using server-side logic with database support
 -Recognized the value of separating concerns between the frontend UI and backend logic through API communication
 -Developed a deeper understanding of full-stack architecture by linking user actions to database operations via Express and MongoDB
+
+# Websocket
+-Learned how WebSocket enables real-time, full-duplex communication between client and server over a single persistent connection
+-Understood the difference between HTTP (request-response) and WebSocket (event-driven messaging)
+-Discovered how to use the WebSocket API in JavaScript to open connections, send messages, and receive updates
+-Gained experience in setting up a WebSocket server using the ws package in Node.js
+-Learned how to send and receive messages between client and server using .send() and .onmessage handlers
+-Recognized the importance of configuring Nginx to support WebSocket upgrades using proxy_http_version 1.1 and Upgrade headers
+-Learned how to debug WebSocket connections using the browser’s developer tools (Network tab > WS)
+-Understood how WebSocket connections are initiated from the frontend using wss:// or ws:// based on protocol
+-Integrated WebSocket functionality into an existing app (Life Hack Journal) to display server-sent messages in real time
+-Gained a deeper appreciation of real-time communication patterns, which are essential for features like notifications, chats, and live updates in modern web apps
