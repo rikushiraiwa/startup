@@ -38,7 +38,7 @@ export default function Register() {
     };
 
     return (
-        <div className="container-fluid min-vh-100 d-flex flex-column align-items-center py-5" style={{ backgroundColor: "#E3F2FD" }}>
+        <div className="container-fluid min-vh-100 d-flex flex-column align-items-center py-5">
             <header className="text-center mb-4">
                 <h1 className="text-primary fw-bold">Register</h1>
             </header>
@@ -74,4 +74,5 @@ export default function Register() {
             </Container>
         </div>
     );
+
 }
