@@ -40,8 +40,9 @@ export default function Register() {
     return (
         <div className="container-fluid min-vh-100 d-flex flex-column align-items-center py-5">
             <header className="text-center mb-4">
-                <h1 className="text-primary fw-bold">Register</h1>
+                <h1 className="text-success fw-bold">Register</h1>
             </header>
+
 
             <Container className="bg-white shadow-sm rounded p-4 text-center" style={{ maxWidth: "400px", width: "90%" }}>
                 <Form>
