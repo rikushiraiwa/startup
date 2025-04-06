@@ -130,5 +130,6 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Backend listens for WebSocket connection** -  Implemented WebSocket server using the ws package in index.js, and confirmed connection with wss.on('connection', ...).
 - [x] **Frontend makes WebSocket connection** - Used new WebSocket(...) in Home.jsx to connect to backend based on current protocol (ws or wss). Confirmed connection with browser dev tools.
 - [x] **Data sent over WebSocket connection** - Sent message "Hello from client!" on connection; backend logs confirmed receipt and sent a response.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
+- [x] **WebSocket data displayed** - WebSocket response is displayed in the frontend with:
+I heard you say: "Hello from client!" shown on the Home page.
 - [ ] **Application is fully functional** - I did not complete this part of the deliverable.
